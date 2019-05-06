@@ -20,8 +20,7 @@
 
 如何运行:
     
-    为保证页面功能正常， 你需要先部署 
-   [node后台服务](https://github.com/a597873885/webfunny_servers)。 
+    为保证页面功能正常， 你需要先部署 Node后台服务：https://github.com/a597873885/webfunny_servers 
     
     Node版本： v10.6.0
 
