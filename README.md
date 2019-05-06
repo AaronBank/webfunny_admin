@@ -10,23 +10,25 @@
     
     使用脚本创建模块，能够进行快速的开发和迭代
     
-    这是一个运用于前端监控系统的项目，我在知乎上对其作用做了介绍。
-    
-线上Demo:
-    http://www.webfunny.cn/
-    
-博客讲解：
-    https://www.cnblogs.com/warm-stranger/p/10209990.html
+    这是一个运用于前端监控系统的项目，我在博客上对其作用做了介绍。
+
+    [点击前往线上Demo](https://www.webfunny.cn/)
+
+    [点击前往博客讲解](https://www.cnblogs.com/warm-stranger/p/10209990.html)    
+
+    [如果实在嫌部署麻烦，Demo系统可以提供7天的监控量，我会长期维护，点击跳转](https://www.webfunny.cn/webfunny/createProject)
 
 如何运行:
-
-    Node版本： v6.4.0
+    
+    为保证页面功能正常， 你需要先部署 [node后台服务](https://github.com/a597873885/webfunny_servers)。 
+    
+    Node版本： v10.6.0
 
     安装依赖包： npm install
 
     本地运行：   npm run start
 
-    运行完成后访问： http://localhost:9010/webfunny/javascriptError   目前以这个页面为开始
+    运行完成后访问： http://localhost:9010/webFunny/home , 正常情况下会自动打开浏览器的。
 
 
 如何打包：
@@ -60,7 +62,7 @@
     }
     重启Nginx后
     
-    访问 http://localhost:8010/webfunny/javascriptError 
+    访问 http://localhost:8010/webfunny/home 
     
 
 
