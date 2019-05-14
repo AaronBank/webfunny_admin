@@ -1,4 +1,5 @@
 .header-container {
+  display: none;
   width: 100%;
   height: 62px;
   position: fixed;
@@ -115,7 +116,7 @@
       color: #8e8f8f;
     }
     .user-type-active {
-      color: #74d04c;
+      color: #a9c282;
       margin-left: -2px;
     }
     .github-container {
@@ -239,7 +240,7 @@
     }
   }
   .ant-switch-checked {
-    background-color: #74d04c;
+    background-color: #a9c282;
   }
   .ant-select-auto-complete.ant-select .ant-input {
     border-width: 0;
@@ -252,8 +253,8 @@
   }
   .ant-btn-primary {
     color: #fff;
-    background-color: #74d04c;
-    border-color: #74d04c;
+    background-color: #a9c282;
+    border-color: #a9c282;
     margin-left: 65px;
   }
 }

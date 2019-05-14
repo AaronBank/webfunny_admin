@@ -20,6 +20,7 @@ const api = {
   "getJsErrorCountByHour": apiHost + "/server/getJavascriptErrorInfoListByHour",
   // 根据JS错误量进行排序
   "getJsErrorSort": apiHost + "/server/getJavascriptErrorSort",
+  "getConsoleErrorSort": apiHost + "/server/getConsoleErrorSort",
   // 根据平台获取JS错误数量
   "getJavascriptErrorCountByOs": apiHost + "/server/getJavascriptErrorCountByOs",
   // errorMsg 获取js错误列表

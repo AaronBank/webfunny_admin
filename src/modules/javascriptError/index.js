@@ -3,6 +3,7 @@ import React, { Component } from "react"
 import Header from "Components/header"
 import { Row, Col, Tabs, Card, Icon, Tooltip, Spin } from "antd"
 import { jsErrorOption, jsErrorOptionByHour } from "ChartConfig/jsChartOption"
+import SvgIcons from "Components/svg_icons"
 import Utils from "Common/utils"
 const TabPane = Tabs.TabPane
 const echarts = require("echarts")
@@ -30,7 +31,7 @@ class JavascriptError extends Component {
     this.props.clearJavascriptErrorState()
   }
   render() {
-    const { jsErrorList, ignoreErrorList, jsErrorListByPage, pageErrorList,
+    const { jsErrorList, consoleErrorList, ignoreErrorList, jsErrorListByPage, pageErrorList,
             maxPageErrorCount, totalPercent, pcPercent,
             iosPercent, androidPercent, activeKeyTop,
             activeKeyDown } = this.props
@@ -48,7 +49,7 @@ class JavascriptError extends Component {
               <TabPane tab={<span><Icon type="area-chart" />月统计<span style={{fontSize: 12}}>(点击柱状图更新数据)</span></span>} key="1">
                 <div id="jsErrorCountByDay" className="chart-box" />
               </TabPane>
-              <TabPane tab={<span><Icon type="clock-circle-o" />实时统计</span>} key="2">
+              <TabPane tab={<span><Icon type="clock-circle-o" theme="filled" />实时统计</span>} key="2">
                 <div id="jsErrorCountByHour" className="chart-box" />
               </TabPane>
             </Tabs>
@@ -80,7 +81,7 @@ class JavascriptError extends Component {
       </Row>
       <Row>
         <Tabs defaultActiveKey="1"  activeKey={activeKeyDown} onTabClick={this.onPageError.bind(this)}>
-          <TabPane tab={<span><Icon type="tags-o" />错误列表(<b>TOP15</b>)</span>} key="1">
+          <TabPane tab={<span><Icon component={SvgIcons.Error}/>捕获异常<span style={{fontSize: 12}}>(window.onerror)<Tooltip placement="top" title="程序运行时出错，使用window.onerror进行捕获并上报"><Icon type="question-circle" style={{"marginLeft": 5}}/></Tooltip></span></span>} key="1">
             <Card className="error-list-container">
               {
                 jsErrorList.length <= 0 && <span className="loading-box"><Icon className="loading-icon" type="loading" /></span>
@@ -89,7 +90,12 @@ class JavascriptError extends Component {
                   jsErrorList.map((error, index) => {
                   const ignoreStatus = ignoreErrorList.filter(data => data.ignoreErrorMessage === error.errorMessage && data.type === "ignore").length > 0
                   const resolveStatus = ignoreErrorList.filter(data => data.ignoreErrorMessage === error.errorMessage && data.type === "resolve").length > 0
-                  const tempErrorMessage = Utils.b64DecodeUnicode(error.errorMessage)
+                  let tempErrorMessage = ""
+                  if (error.errorMessage && error.errorMessage.indexOf(" ") !== -1) {
+                    tempErrorMessage = Utils.b64DecodeUnicodeWithSpace(error.errorMessage)
+                  } else {
+                    tempErrorMessage = Utils.b64DecodeUnicode(error.errorMessage)
+                  }
                   const msgArr = tempErrorMessage.split(": ")
                   const len = msgArr.length
                   const nowTime = new Date().getTime()
@@ -125,7 +131,57 @@ class JavascriptError extends Component {
               }
             </Card>
           </TabPane>
-          <TabPane tab={<span><Icon type="switcher" />错误页面</span>} key="2">
+          <TabPane tab={<span><Icon component={SvgIcons.ZiDingYi} />自定义异常<span style={{fontSize: 12}}>(console.error)<Tooltip placement="top" title="用户自定义并上报的错误, 使用console.error进行上报；同时也包含第三方的报错信息。"><Icon type="question-circle" style={{"marginLeft": 5}}/></Tooltip></span></span>} key="2">
+            <Card className="error-list-container">
+              {
+                consoleErrorList.length <= 0 && <span className="loading-box"><Icon className="loading-icon" type="loading" /></span>
+              }
+              {
+                consoleErrorList.map((error, index) => {
+                  const ignoreStatus = ignoreErrorList.filter(data => data.ignoreErrorMessage === error.errorMessage && data.type === "ignore").length > 0
+                  const resolveStatus = ignoreErrorList.filter(data => data.ignoreErrorMessage === error.errorMessage && data.type === "resolve").length > 0
+                  let tempErrorMessage = ""
+                  if (error.errorMessage && error.errorMessage.indexOf(" ") !== -1) {
+                    tempErrorMessage = Utils.b64DecodeUnicodeWithSpace(error.errorMessage)
+                  } else {
+                    tempErrorMessage = Utils.b64DecodeUnicode(error.errorMessage)
+                  }
+                  const msgArr = tempErrorMessage.split(": ")
+                  const len = msgArr.length
+                  const nowTime = new Date().getTime()
+                  const latestTime = parseInt(error.happenTime, 10)
+                  const timeStatus = nowTime - latestTime > 24 * 60 * 60 * 1000
+                  return <p key={index} onClick={this.turnToDetail.bind(this, error)} title="点击查看详情" >
+                    <span className={ignoreStatus && " status-icon status-icon-ignore " ||  resolveStatus && " status-icon status-icon-resolve " || "status-icon"}/>
+                    <span>{ (Utils.b64DecodeUnicode(msgArr[0] || msgArr[1] || msgArr[2]) || "").substring(0, 30)}</span>
+                    <span>{Utils.b64DecodeUnicode(msgArr[len - 1]) || "..."}</span>
+                    { error.osInfo &&
+                    error.osInfo.map((obj) => {
+                      let osType = ""
+                      if (obj.os === "ios") {
+                        osType = "apple"
+                      } else if (obj.os === "and") {
+                        osType = "android"
+                      } else {
+                        osType = "windows"
+                      }
+                      return <span key={Math.random()}>
+                          <Icon className="click-export" theme="filled" type={osType} /><label>（{obj.count}次）</label>
+                        </span>
+                    })
+                    }
+                    {
+                      ignoreStatus && <label className="ignore-state">已忽略</label> ||
+                      resolveStatus && <label className="resolve-state">已解决</label>
+                    }
+                    <span className="right-icon"><Icon type="right" /></span>
+                    <span className={timeStatus ? "not-today" : ""} title="发生时间以用户的手机为准，不完全准确"><i>{timeStatus ? "最近：" : "24小时内："}</i>{new Date(latestTime).Format("yyyy-MM-dd hh:mm:ss")}</span>
+                  </p>
+                })
+              }
+            </Card>
+          </TabPane>
+          <TabPane tab={<span><Icon component={SvgIcons.Pages} />错误页面</span>} key="3">
             <Col span={8} className="page-container">
               <Card style={{ width: "100%" }}>
                 {
@@ -219,6 +275,11 @@ class JavascriptError extends Component {
     const { timeType } = this.props
     this.props.updateJavascriptErrorState({activeKeyDown: key})
     if (key === "2") {
+      // 获取js错误列表
+      this.props.getConsoleErrorSortAction({ timeType }, (res) => {
+        this.props.updateJavascriptErrorState({consoleErrorList: res.data})
+      })
+    } else if (key === "3") {
       this.props.getJsErrorCountByPageAction({ timeType }, (res) => {
         if (res.length) {
           this.props.getJsErrorSortAction({simpleUrl: res[0].simpleUrl, timeType}, (result) => {

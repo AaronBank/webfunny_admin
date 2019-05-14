@@ -7,6 +7,8 @@ import BackToTop from "./svg/backTop.svg"
 import Total from "./svg/Total.svg"
 import Customers from "./svg/customers.svg"
 import Pages from "./svg/pages.svg"
+import ZiDingYi from "./svg/zidingyi.svg"
+import Error from "./svg/error.svg"
 
 export default {
   RequestSvg,
@@ -17,5 +19,7 @@ export default {
   BackToTop,
   Total,
   Customers,
-  Pages
+  Pages,
+  ZiDingYi,
+  Error
 }

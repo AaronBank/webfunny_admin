@@ -19,6 +19,17 @@ export default class Utils {
       return str
     }
   }
+  static b64DecodeUnicodeWithSpace(tempStr) {
+    if (!tempStr) return ""
+    const str = tempStr.replace(/ /g, "+")
+    try {
+      return decodeURIComponent(atob(str).split("").map(function(c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
+      }).join(""))
+    } catch (e) {
+      return str
+    }
+  }
   static b64DecodeUnicodeBehavior(tempStr) {
     if (!tempStr) return ""
     const str = tempStr.replace(/ /g, "+")

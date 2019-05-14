@@ -84,7 +84,7 @@ export default class Header extends Component {
       </Menu>
     return <div className="header-container">
       <section className="sub-header">
-        <Icon className="home-icon" type="home" onClick={this.turnToHome.bind(this)}/>
+        <Icon className="home-icon" type="home" theme="filled" onClick={this.turnToHome.bind(this)}/>
         <div className="project-select-box">
           {
             projectNameList.length > 0 &&
@@ -133,7 +133,7 @@ export default class Header extends Component {
     </div>
   }
   turnToZhihu() {
-    window.open("https://zhuanlan.zhihu.com/p/56629298")
+    window.open("https://zhuanlan.zhihu.com/webfunny")
   }
   turnTo(url) {
     this.props.parentProps.history.push(url)

@@ -3,6 +3,7 @@ import { handleActions } from "redux-actions"
 const initialState = {
   timeType: 0,
   jsErrorList: [],
+  consoleErrorList: [],
   ignoreErrorList: [],
   jsErrorListByPage: [],
   pageErrorList: [],

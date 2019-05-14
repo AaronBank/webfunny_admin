@@ -35,7 +35,7 @@ class Behaviors extends Component {
   render() {
     const { behaviorList, searchFlag, userInfo, loadPageTimeList, timeScope, showMore } = this.props
     const bLen = behaviorList.length
-    let happenTimeTemp = ""
+    // let happenTimeTemp = ""
     const selectTimeScope =
       <Select defaultValue={timeScope + 1 + "天"} style={{ width: 80 }} onChange={this.handleTimeScopeChange}>
         <Option value={0}>1天</Option>
@@ -77,10 +77,10 @@ class Behaviors extends Component {
                   if (bLen > 200 && !showMore && index < bLen - 100) {
                     return null
                   }
-                  if (behavior.happenTime === happenTimeTemp) {
-                    return null
-                  }
-                  happenTimeTemp = behavior.happenTime
+                  // if (behavior.happenTime === happenTimeTemp) {
+                  //   return null
+                  // }
+                  // happenTimeTemp = behavior.happenTime
                   const happenTime = new Date(parseInt(behavior.happenTime, 10)).Format("yyyy-MM-dd hh:mm:ss.S")
                   let completeUrl = decodeURIComponent(behavior.completeUrl || behavior.simpleUrl)
                   let color = ""
@@ -102,7 +102,7 @@ class Behaviors extends Component {
                   } else if (behavior.uploadType === "CUSTOMER_PV") {
                     color = "blue"
                     behaviorName = "进入页面 "
-                    behaviorContent = behavior.completeUrl // .replace(/https:\/\/.*\//g, "https://****/")
+                    behaviorContent = decodeURIComponent(Utils.b64DecodeUnicode(behavior.completeUrl ))// .replace(/https:\/\/.*\//g, "https://****/")
                     deviceInfo =  <a onClick={this.searchPhone.bind(this, "https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd=" + behavior.deviceName)}>（{behavior.loadType}）（{behavior.os.indexOf("ios") !== -1 ? <Icon type="apple" theme="filled"/> : <Icon type="android" theme="filled"/>}{ behavior.deviceName + " / " + behavior.os }）</a>
                   } else if (behavior.uploadType === "JS_ERROR") {
                     color = "red"
@@ -134,6 +134,11 @@ class Behaviors extends Component {
                     behaviorName = <span style={{display: "block"}}>{behavior.behaviorType} <i style={{fontSize: 12, color}}>{"    状态：" + behavior.behaviorResult + "  "}</i></span>
                     behaviorContent = behavior.description
                     completeUrl = ""
+                  } else if (behavior.uploadType === "CUSTOMIZE_BEHAVIOR") {
+                    color = "#b7b752"
+                    behaviorName = <span style={{display: "block"}}>{behavior.behaviorType} <i style={{fontSize: 12, color}}>{"    状态：" + behavior.behaviorResult + "  "}</i></span>
+                    behaviorContent = behavior.description
+                    completeUrl = ""
                   } else {
                     color = "black"
                   }
@@ -153,7 +158,7 @@ class Behaviors extends Component {
                         }
                       </label>
                       <label className="footprint-time"><b style={{color: "#666"}}>客户端时间：{happenTime}</b></label>
-                      <label className="footprint-time"><a style={{color: "#77b3eb"}} href={completeUrl} target="_blank">{completeUrl}</a> { deviceInfo } </label>
+                      <label className="footprint-time"><a style={{color: "#77b3eb"}} href={decodeURIComponent(Utils.b64DecodeUnicode(completeUrl))} target="_blank">{decodeURIComponent(Utils.b64DecodeUnicode(completeUrl))}</a> { deviceInfo } </label>
                     </span>
                   </Timeline.Item>
                 })

@@ -27,6 +27,12 @@ export const getJsErrorSortAction = (param, handleResult) => () => {
   })
 }
 
+export const getConsoleErrorSortAction = (param, handleResult) => () => {
+  return HttpUtil.post(HttpApi.getConsoleErrorSort, param).then( response => {
+    handleResult(response)
+  })
+}
+
 export const getJavascriptErrorCountByOsAction = (param, handleResult) => () => {
   return HttpUtil.get(HttpApi.getJavascriptErrorCountByOs, param).then( response => {
     handleResult(response.data)

@@ -4,11 +4,11 @@
     left: 0;
     width: 100%;
     min-height: 100%;
-    background-image: url("../../assets/img/home/spring2.jpeg");
+    background-image: url("../../assets/img/home/spring3.jpg");
     background-size: cover;
-    background-position: center;
+    background-position: bottom;
     .header-container {
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(248, 249, 253, 0.8);
     }
     @keyframes shadow
     {
@@ -85,7 +85,7 @@
             float: left;
             box-shadow: 1px 0px 20px 1px #313131;
             .ant-tabs-line {
-                background: #fff;
+                background: rgba(255, 255, 255, 0.8);
             }
         }
         .right {

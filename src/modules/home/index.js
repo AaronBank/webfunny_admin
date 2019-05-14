@@ -3,6 +3,7 @@ import React, { Component } from "react"
 import Header from "Components/header"
 import ChartFactory from "Components/chartFactory"
 import SvgIcons from "Components/svg_icons"
+import Fox from "Components/fox"
 import { jsErrorOptionByHour } from "ChartConfig/jsChartOption"
 import { Spin, Tabs, Icon, notification } from "antd"
 import utils from "Common/utils"
@@ -14,41 +15,12 @@ export default class Home extends Component {
     this.analysisErrorData.bind(this)
   }
   componentDidMount() {
-    // 冬天飘雪花
-    const canvas = document.querySelector("#snowCanvas")
-    this.snow(canvas)
     this.openNotification()
   }
 
-  openNotification() {
-    const nowDay = new Date().Format("yyyy-MM-dd")
-    if (localStorage.closeNotification && nowDay <= localStorage.closeNotification) {
-      return
-    }
-    const key = `open${Date.now()}`
-    notification.open({
-      message: "更新提示（2019-05-05）",
-      description: <p className="update-box">
-        <span>1. 增加免部署版本，只需输入项目名称，即可生成监控代码，实时统计；</span> <br/>
-        <span>2. 增加静态资源报错数据统计；</span> <br/>
-        <span className="line" />
-        <label>1. 增加接口报错统计分析；</label>
-      </p>,
-      onClose: () => {
-        localStorage.closeNotification = new Date().Format("yyyy-MM-dd")
-      },
-      style: {
-        width: 400,
-        marginTop: 50,
-      },
-      duration: 20,
-      key
-    })
-  }
   render() {
     const { jsErrorTotalCount, jsErrorByHourChart, resourceErrorTotalCount, resourceErrorByDayChart, httpErrorTotalCount, httpErrorByHourChart } = this.props
     return <div className="home-container">
-      <canvas className="snow-canvas" id="snowCanvas" />
       <Header
         chooseProject={this.choseProject.bind(this)}
         loadedProjects={this.loadedProjects.bind(this)}
@@ -57,6 +29,7 @@ export default class Home extends Component {
       />
       <div className="home-mask">
         <div className="home-content">
+          <Fox/>
           <div className="left">
             <Tabs>
               <TabPane tab={<span><Icon type="line-chart" />Js报错实时监控（今日：{jsErrorTotalCount}）</span>} key="1">
@@ -128,8 +101,29 @@ export default class Home extends Component {
       const seven = res.data.seven
       const errorInfo = this.analysisErrorData(data, hours)
       const sevenDayAgoErrorInfo = this.analysisErrorData(seven, sevenHours)
-      console.log(errorInfo, sevenDayAgoErrorInfo)
       this.props.updateHomeState({httpErrorTotalCount: errorInfo.errorTotalCount, httpErrorByHourChart: jsErrorOptionByHour([errorInfo.dateArray, errorInfo.errorArray], [errorInfo.dateArray, sevenDayAgoErrorInfo.errorArray])})
+    })
+  }
+  openNotification() {
+    const nowDay = new Date().Format("yyyy-MM-dd")
+    if (localStorage.closeNotification && nowDay <= localStorage.closeNotification) {
+      return
+    }
+    const key = `open${Date.now()}`
+    notification.open({
+      message: "更新提示（2019-05-14）",
+      description: <p className="update-box">
+        <span> 抱歉，后台并发服务调整，暂时不开放功能 </span>
+      </p>,
+      onClose: () => {
+        localStorage.closeNotification = new Date().Format("yyyy-MM-dd")
+      },
+      style: {
+        width: 400,
+        marginTop: 50,
+      },
+      duration: 20,
+      key
     })
   }
   analysisErrorData(data, hours) {
@@ -165,7 +159,7 @@ export default class Home extends Component {
   }
   loadedProjects() {
     setTimeout(() => {
-      this.initData()
+      // this.initData()
     }, 2000)
   }
   turnToJsError() {
@@ -173,50 +167,5 @@ export default class Home extends Component {
   }
   turnToBehaviors() {
     this.props.history.push("behaviors")
-  }
-  snow(canvas) {
-    const context = canvas.getContext("2d")
-    // 微粒子创建数组
-    const particles = []
-    for (let j = 0; j < 400; j++) {
-      const floorIndex = j % 5
-      const colors = ["#EE7657", "#6AEC5F", "#F6EE72", "#F36DF6", "#80F6C2"]
-      particles.push({// 设置雪花的初始位x，y  x,y向上的速度，以及雪花的大小颜色，随机生成的
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        vx: Math.random() * 1 - 0.5,
-        vy: Math.random() * 1 + 0.5,
-        size: 1 + Math.random() * 1,
-        color: colors[floorIndex]
-      })
-    }
-    // 进行绘制
-    function timeUp() {
-      context.clearRect(0, 0, window.innerWidth, window.innerHeight)
-      // 清除画布
-      let particle = {}
-      for (let i = 0; i < 500; i++) {// 遍历所有的雪花
-        particle = particles[i]
-        if (!particle) continue
-        particle.x += particle.vx// 更新雪花的新的x,y位置
-        particle.y += particle.vy
-        if (particle.x < 0) {
-          particle.x = window.innerWidth// 如果雪花的位置放在了左侧意外，然后使其显示在窗口右边
-        }
-        if (particle.x > window.innerWidth) {
-          particle.x = 0
-        }
-        if (particle.y >= window.innerHeight) {
-          particle.y = 0
-        }
-        // 设置雪花颜色
-        context.fillStyle = particle.color
-        context.beginPath()// 开始绘制雪花
-        context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)// 绘制圆形
-        context.closePath()// 必和路径
-        context.fill()
-      }
-    }
-    setInterval(timeUp, 40)
   }
 }

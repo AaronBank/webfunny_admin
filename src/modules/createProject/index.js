@@ -39,7 +39,7 @@ class CreateProject extends Component {
       {
         monitorCode &&
         <Card title="探针代码" style={{ width: "60%", margin: "auto", marginTop: 30 }}>
-          <textarea className="code-box" defaultValue={decodeURIComponent(monitorCode)}></textarea>
+          <textarea className="code-box" defaultValue={decodeURIComponent(monitorCode)} />
         </Card>
       }
       {
