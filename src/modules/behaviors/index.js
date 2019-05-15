@@ -29,7 +29,7 @@ class Behaviors extends Component {
         this.search()
       }
     })
-    console.log(Utils.b64DecodeUnicodeBehavior("aHR0cHM6Ly9hcGkuNTFkYXRha2V5LmNvbS9jYXJyaWVyL3YzL3Rhc2tzLzE1MjA4MjI1NTM1L3R5cGU/aWRfY2FyZD01MTEzMjIxOTg5MDkyNzg1NzYmcmVhbF9uYW1lPSVFNiU5RCU4RSVFNiU5NiU4NyVFOCU4RCVBMw=="))
+    console.log(Utils.b64EncodeUnicode("https://mall.qingchunbank.com/ltvfe/cl/app_bill?entry=true"))
   }
 
   render() {
@@ -183,12 +183,12 @@ class Behaviors extends Component {
                 <p>所在地区：{userInfo.province + "  " + userInfo.city}</p>
                 <p>
                   <span style={{display: "block"}}>开始时间：{new Date(parseInt(userInfo.startTime, 10)).Format("yyyy-MM-dd hh:mm:ss")}</span>
-                  <span>结束时间：{new Date(parseInt(userInfo.endTime, 10)).Format("yyyy-MM-dd hh:mm:ss")}</span> (停留{((userInfo.endTime - userInfo.startTime) / 60000).toFixed(1)}分钟)
+                  <span>结束时间：{new Date(parseInt(userInfo.endTime, 10)).Format("yyyy-MM-dd hh:mm:ss")}</span>
                 </p>
                 <p>行为记录：{behaviorList.length} 条</p>
               </Card>
             }
-            { loadPageTimeList.length &&
+            { loadPageTimeList.length > 0 &&
             <Card id="loadCard" title="页面平均加载时间（网络环境评估）">
               <div id="loadPageTimeChart" className="chart-box" />
             </Card>

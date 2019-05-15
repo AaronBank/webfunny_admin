@@ -111,9 +111,13 @@ export default class Home extends Component {
     }
     const key = `open${Date.now()}`
     notification.open({
-      message: "更新提示（2019-05-14）",
+      message: "更新提示（2019-05-15）",
       description: <p className="update-box">
-        <span> 抱歉，后台并发服务调整，暂时不开放功能 </span>
+        <span>1. JS错误增加自定义异常，未处理promise异常；</span> <br/>
+        <span>2. 对涉及到的敏感信息进行加密处理；</span> <br/>
+        <span className="line" />
+        <label>1. 将增加接口报错统计分析；</label>
+        <label>2. 将要完善行为检索功能，增加浏览器信息，接口概览相关数据；</label>
       </p>,
       onClose: () => {
         localStorage.closeNotification = new Date().Format("yyyy-MM-dd")
@@ -159,7 +163,7 @@ export default class Home extends Component {
   }
   loadedProjects() {
     setTimeout(() => {
-      // this.initData()
+      this.initData()
     }, 2000)
   }
   turnToJsError() {

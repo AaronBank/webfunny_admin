@@ -15,7 +15,9 @@ const initialState = {
   activeKeyTop: "1",
   activeKeyDown: "1",
   project: null,
-  simpleUrl: ""
+  simpleUrl: "",
+  onErrorCount: 0,
+  consoleErrorCount: 0
 }
 
 export default handleActions({

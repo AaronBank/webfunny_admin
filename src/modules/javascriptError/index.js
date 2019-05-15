@@ -32,9 +32,8 @@ class JavascriptError extends Component {
   }
   render() {
     const { jsErrorList, consoleErrorList, ignoreErrorList, jsErrorListByPage, pageErrorList,
-            maxPageErrorCount, totalPercent, pcPercent,
-            iosPercent, androidPercent, activeKeyTop,
-            activeKeyDown } = this.props
+            maxPageErrorCount, onErrorCount, consoleErrorCount, activeKeyTop, activeKeyDown } = this.props
+    const totalJsErrorCount = parseInt(onErrorCount, 10) + parseInt(consoleErrorCount, 10)
     return <div className="javascriptError-container">
       <Header
         chooseProject={this.choseProject.bind(this)}
@@ -58,20 +57,16 @@ class JavascriptError extends Component {
             <Tabs defaultActiveKey="1" >
               <TabPane tab={<span><Icon type="file-text" />错误率</span>} key="1">
                 <div className="info-box">
-                  <span><Icon type="thunderbolt" theme="filled" /><label>总错误率</label></span>
-                  <span>{totalPercent}%</span>
+                  <span><Icon type="thunderbolt" theme="filled" /><label>总数量</label></span>
+                  <span>{totalJsErrorCount}</span>
                 </div>
                 <div className="info-box">
-                  <span><Icon type="windows" theme="filled"/><label>PC错误率</label></span>
-                  <span>{pcPercent}%</span>
+                  <span><Icon component={SvgIcons.Error}/><label>捕获异常数量</label></span>
+                  <span>{onErrorCount}</span>
                 </div>
                 <div className="info-box">
-                  <span><Icon type="apple" theme="filled" /><label>IOS错误率</label></span>
-                  <span>{iosPercent}%</span>
-                </div>
-                <div className="info-box">
-                  <span><Icon type="android" theme="filled"/><label>Android错误率</label></span>
-                  <span>{androidPercent}%</span>
+                  <span><Icon component={SvgIcons.ZiDingYi} /><label>自定义异常数量</label></span>
+                  <span>{consoleErrorCount}</span>
                 </div>
               </TabPane>
             </Tabs>
@@ -243,33 +238,38 @@ class JavascriptError extends Component {
         // 基于准备好的dom，初始化echarts实例
         const jsErrorChartByHour = echarts.init(document.getElementById("jsErrorCountByHour"))
         const data = res.data.today
-        const dateArray = [], jsErrorArray = []
-        let jsErrorTotalCount = 0
-        for (let i = 0; i < hours.length; i ++) {
-          if (data[i] && data[i].hour === hours[i]) {
-            dateArray.push(data[i].hour + "时")
-            jsErrorArray.push(data[i].count)
-            jsErrorTotalCount = jsErrorTotalCount + parseInt(data[i].count, 10)
-          } else {
-            dateArray.push(hours[i] + "时")
-            jsErrorArray.push(0)
-          }
-        }
         const seven = res.data.seven
-        const sevenDateArray = [], sevenJsErrorArray = []
-        for (let i = 0; i < sevenHours.length; i ++) {
-          if (seven[i] && seven[i].hour === sevenHours[i]) {
-            sevenDateArray.push(seven[i].hour + "时")
-            sevenJsErrorArray.push(seven[i].count)
-          } else {
-            sevenDateArray.push(sevenHours[i] + "时")
-            sevenJsErrorArray.push(0)
-          }
-        }
-        jsErrorChartByHour.setOption(jsErrorOptionByHour([dateArray, jsErrorArray], [sevenDateArray, sevenJsErrorArray]))
+        const jsErrorInfo = this.analysisErrorData(data, hours)
+        const sevenDayAgoJsErrorInfo = this.analysisErrorData(seven, sevenHours)
+        jsErrorChartByHour.setOption(jsErrorOptionByHour([hours, jsErrorInfo.errorArray], [hours, sevenDayAgoJsErrorInfo.errorArray]))
       })
     }
     this.props.updateJavascriptErrorState({activeKeyTop: key, activeKeyDown: "1"})
+  }
+  analysisErrorData(data, hours) {
+    const nowHour = new Date().getHours()
+    const dateArray = [], errorArray = []
+    let errorTotalCount = 0
+    for (let i = 0; i < hours.length; i ++) {
+      let isInclude = false
+      for (let j = 0; j < data.length; j ++) {
+        if (data[j].hour === hours[i]) {
+          const tempHour = hours[i]
+          dateArray.push(tempHour + "时")
+          errorArray.push(data[j].count)
+          if (nowHour >= parseInt(tempHour.substring(6, 8), 10)) {
+            errorTotalCount = errorTotalCount + parseInt(data[j].count, 10)
+          }
+          isInclude = true
+          break
+        }
+      }
+      if (isInclude === false) {
+        dateArray.push(hours[i] + "时")
+        errorArray.push(0)
+      }
+    }
+    return {errorTotalCount, dateArray, errorArray}
   }
   onPageError(key) {
     const { timeType } = this.props
@@ -305,27 +305,25 @@ class JavascriptError extends Component {
 
   initData() {
     this.loadInitData()
-
     // 根据平台获取并计算错误率
-    this.props.getJavascriptErrorCountByOsAction({day: 1}, (result) => {
-      const pcError = parseInt(result.pcError.count, 10)
-      const iosError = parseInt(result.iosError.count, 10)
-      const androidError = parseInt(result.androidError.count, 10)
-      const pcPv = parseInt(result.pcPv.count, 10)
-      const iosPv = parseInt(result.iosPv.count, 10)
-      const androidPv = parseInt(result.androidPv.count, 10)
-
-      const errorTotal = pcError + iosError + androidError
-      const pvTotal = pcPv + iosPv + androidPv
-
-      const totalPercent = (errorTotal * 100 / pvTotal).toFixed(2)
-      const pcPercent = (pcError * 100 / pcPv).toFixed(2)
-      const iosPercent = (iosError * 100 / iosPv).toFixed(2)
-      const androidPercent = (androidError * 100 / androidPv).toFixed(2)
-      this.props.updateJavascriptErrorState({totalPercent, pcPercent, iosPercent, androidPercent})
-    })
+    // this.props.getJavascriptErrorCountByOsAction({day: 1}, (result) => {
+    //   const pcError = parseInt(result.pcError.count, 10)
+    //   const iosError = parseInt(result.iosError.count, 10)
+    //   const androidError = parseInt(result.androidError.count, 10)
+    //   const pcPv = parseInt(result.pcPv.count, 10)
+    //   const iosPv = parseInt(result.iosPv.count, 10)
+    //   const androidPv = parseInt(result.androidPv.count, 10)
+    //
+    //   const errorTotal = pcError + iosError + androidError
+    //   const pvTotal = pcPv + iosPv + androidPv
+    //
+    //   const totalPercent = (errorTotal * 100 / pvTotal).toFixed(2)
+    //   const pcPercent = (pcError * 100 / pcPv).toFixed(2)
+    //   const iosPercent = (iosError * 100 / iosPv).toFixed(2)
+    //   const androidPercent = (androidError * 100 / androidPv).toFixed(2)
+    //   this.props.updateJavascriptErrorState({totalPercent, pcPercent, iosPercent, androidPercent})
+    // })
   }
-
   // 加载错误图表数据
   async loadInitData(newTimeType) {
     let dataIndex = 29
@@ -359,6 +357,18 @@ class JavascriptError extends Component {
           this.setState({loading: false})
         })
       })
+      // 获取js分类数量
+      this.props.getJavascriptErrorCountByTypeAction({ timeType: 29 - dataIndex }, (result) => {
+        let onErrorCount = 0, consoleErrorCount = 0
+        result.forEach((item) => {
+          if (item.infoType === "on_error") {
+            onErrorCount = item.count
+          } else if (item.infoType === "console_error") {
+            consoleErrorCount = item.count
+          }
+        })
+        this.props.updateJavascriptErrorState({onErrorCount, consoleErrorCount})
+      })
     })
     // 获取忽略js错误列表
     this.props.getIgnoreJavascriptErrorListAction((result) => {
@@ -370,6 +380,18 @@ class JavascriptError extends Component {
       }).catch(() => {
         this.setState({loading: false})
       })
+    })
+    // 获取js分类数量
+    this.props.getJavascriptErrorCountByTypeAction({ timeType: 29 - dataIndex }, (result) => {
+      let onErrorCount = 0, consoleErrorCount = 0
+      result.forEach((item) => {
+        if (item.infoType === "on_error") {
+          onErrorCount = item.count
+        } else if (item.infoType === "console_error") {
+          consoleErrorCount = item.count
+        }
+      })
+      this.props.updateJavascriptErrorState({onErrorCount, consoleErrorCount})
     })
   }
   choseProject() {

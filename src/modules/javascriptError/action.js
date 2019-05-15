@@ -39,6 +39,12 @@ export const getJavascriptErrorCountByOsAction = (param, handleResult) => () => 
   })
 }
 
+export const getJavascriptErrorCountByTypeAction = (param, handleResult) => () => {
+  return HttpUtil.get(HttpApi.getJavascriptErrorCountByType, param).then( response => {
+    handleResult(response.data)
+  })
+}
+
 export const getIgnoreJavascriptErrorListAction = (handleResult) => () => {
   return HttpUtil.get(HttpApi.ignoreErrorByApplication).then( response => {
     handleResult(response.data)
