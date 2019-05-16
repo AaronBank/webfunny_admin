@@ -29,7 +29,6 @@ class Behaviors extends Component {
         this.search()
       }
     })
-    console.log(Utils.b64EncodeUnicode("https://mall.qingchunbank.com/ltvfe/cl/app_bill?entry=true"))
   }
 
   render() {
