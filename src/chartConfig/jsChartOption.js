@@ -1,3 +1,4 @@
+const echarts = require("echarts")
 export const jsErrorOption = (result) => {
   return {
     color: [ "#5d5cb6" ],
@@ -84,7 +85,6 @@ export const jsErrorOptionByHour = (result2, result1) => {
     tooltip: {
       trigger: "axis",
       confine: true,
-      position: ["50%", "50%"],
       alwaysShowContent: false,
       hideDelay: 100
     },
@@ -153,6 +153,15 @@ export const jsErrorOptionByHour = (result2, result1) => {
         name: "今天",
         type: "line",
         smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: '#E37B66'
+          }, {
+            offset: 1,
+            color: 'rgb(255,255,255)'
+          }])
+        },
         data: result2[1],
       },
     ]

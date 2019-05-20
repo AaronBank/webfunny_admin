@@ -78,15 +78,35 @@
     }
     .home-content {
         margin-top: 62px;
-        .left {
+        .content-box1 {
             width: 70%;
             margin-left: 15%;
             margin-top:  10%;
-            float: left;
-            box-shadow: 1px 0px 20px 1px #313131;
+            z-index: 2;
+            position: absolute;
+            box-shadow: 1px 0px 10px 1px #9b9b9b;
             .ant-tabs-line {
-                background: rgba(255, 255, 255, 0.8);
+                background: rgba(255, 255, 255, 0.9);
             }
+            transform: scale(0.85);
+            opacity: 0.3;
+        }
+        .content-box2 {
+            width: 70%;
+            margin-left: 15%;
+            margin-top:  5%;
+            position: absolute;
+            z-index: 1;
+            box-shadow: 1px 0px 10px 1px #9b9b9b;
+            .ant-tabs-line {
+                background: rgba(255, 255, 255, 0.9);
+            }
+            transform: scale(0.85);
+            opacity: 0.3;
+        }
+        .content-active {
+            transform: scale(1);
+            opacity: 1;
         }
         .right {
             display: none;

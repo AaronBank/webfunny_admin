@@ -55,7 +55,7 @@ class JavascriptError extends Component {
           </Col>
           <Col span={8}>
             <Tabs defaultActiveKey="1" >
-              <TabPane tab={<span><Icon type="file-text" />错误率</span>} key="1">
+              <TabPane tab={<span><Icon type="file-text" />错误数量</span>} key="1">
                 <div className="info-box">
                   <span><Icon type="thunderbolt" theme="filled" /><label>总数量</label></span>
                   <span>{totalJsErrorCount}</span>

@@ -10,7 +10,9 @@ const initialState = {
   previewUrl: "",
   timeScope: 0,
   showMore: false,
-  loadPageTimeList: []
+  loadPageTimeList: [],
+  behaviorStartTime: "",
+  behaviorEndTime: ""
 }
 
 export default handleActions({

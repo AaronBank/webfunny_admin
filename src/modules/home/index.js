@@ -25,12 +25,11 @@ export default class Home extends Component {
         chooseProject={this.choseProject.bind(this)}
         loadedProjects={this.loadedProjects.bind(this)}
         parentProps={this.props}
-        isCreateProject
       />
       <div className="home-mask">
         <div className="home-content">
           <Fox/>
-          <div className="left">
+          <div className="content-box1 content-active">
             <Tabs>
               <TabPane tab={<span><Icon type="line-chart" />Js报错实时监控（今日：{jsErrorTotalCount}）</span>} key="1">
                 {
@@ -66,6 +65,31 @@ export default class Home extends Component {
                       option={httpErrorByHourChart}
                     />
                     :
+                    <div className="chart-loading">
+                      <Spin tip="Loading..."/>
+                    </div>
+                }
+              </TabPane>
+            </Tabs>
+          </div>
+          <div className="content-box2">
+            <Tabs>
+              <TabPane tab={<span><Icon type="line-chart" />用户日活量分析</span>} key="1">
+                {
+                    <div className="chart-loading">
+                      <Spin tip="Loading..."/>
+                    </div>
+                }
+              </TabPane>
+              <TabPane tab={<span><Icon type="file-text" />PV/UV增长趋势</span>} key="2">
+                {
+                    <div className="chart-loading">
+                      <Spin tip="Loading..."/>
+                    </div>
+                }
+              </TabPane>
+              <TabPane tab={<span><Icon component={SvgIcons.RequestSvg} />地理位置分布</span>} key="3">
+                {
                     <div className="chart-loading">
                       <Spin tip="Loading..."/>
                     </div>
@@ -111,13 +135,13 @@ export default class Home extends Component {
     }
     const key = `open${Date.now()}`
     notification.open({
-      message: "更新提示（2019-05-15）",
+      message: "更新提示（2019-05-20）",
       description: <p className="update-box">
-        <span>1. JS错误增加自定义异常，未处理promise异常；</span> <br/>
-        <span>2. 对涉及到的敏感信息进行加密处理；</span> <br/>
+        <span>1. 增加接口报错统计分析；</span> <br/>
+        <span>2. 优化部分慢sql的问题；</span> <br/>
+        <span>3. 增加了一种生成探针，和部署探针的方式；</span> <br/>
         <span className="line" />
-        <label>1. 将增加接口报错统计分析；</label>
-        <label>2. 将要完善行为检索功能，增加浏览器信息，接口概览相关数据；</label>
+        <label>1. 将在首页增加日活量，PV/UV等信息的展示；</label>
       </p>,
       onClose: () => {
         localStorage.closeNotification = new Date().Format("yyyy-MM-dd")

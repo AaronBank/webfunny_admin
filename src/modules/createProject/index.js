@@ -1,6 +1,6 @@
 import "./index.scss"
 import React, { Component } from "react"
-import { Form, Input, Button, Card } from "antd"
+import {Form, Input, Button, Card, message} from "antd"
 import Header from "Components/header"
 const { Meta } = Card
 class CreateProject extends Component {
@@ -12,12 +12,17 @@ class CreateProject extends Component {
   }
 
   render() {
-    const { monitorCode } = this.props
+    const { monitorCode, remotePath } = this.props
     const { getFieldDecorator } = this.props.form
+    const monitorCode2 = `
+      <script type='text/javascript'>
+      var script=document.createElement('script');script.id='web_monitor';script.async=1;script.src='${remotePath}';var dom=document.getElementsByTagName('script')[0];dom.parentNode.insertBefore(script,dom);
+      </script>
+    `
     return <div className="createProject-container">
       <Header parentProps={this.props}/>
       <Card title="创建新项目" style={{ width: "60%", margin: "auto" }}>
-        <Form labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.createNewProject.bind(this)}>
+        <Form labelCol={{ span: 5 }} wrapperCol={{ span: 13 }} onSubmit={this.createNewProject.bind(this)}>
           <Form.Item
             label="项目名"
           >
@@ -26,6 +31,8 @@ class CreateProject extends Component {
             })(
               <Input placeholder="输入你的项目名称" />
             )}
+            项目创建完成后直接复制代码，插入到 Html 的 header 中即可<br/>
+            <b>创建完成后需立即复制，否则都需要重新创建</b>
           </Form.Item>
           <Form.Item
             wrapperCol={{ span: 12, offset: 5 }}
@@ -38,8 +45,14 @@ class CreateProject extends Component {
       </Card>
       {
         monitorCode &&
-        <Card title="探针代码" style={{ width: "60%", margin: "auto", marginTop: 30 }}>
+        <Card title="探针部署代码1（推荐）：" style={{ width: "60%", margin: "auto", marginTop: 30 }}>
           <textarea className="code-box" defaultValue={decodeURIComponent(monitorCode)} />
+        </Card>
+      }
+      {
+        remotePath &&
+        <Card title="探针部署代码2（简便）：" style={{ width: "60%", margin: "auto", marginTop: 30 }}>
+          <textarea className="code-box" defaultValue={monitorCode2} />
         </Card>
       }
       {
@@ -64,8 +77,12 @@ class CreateProject extends Component {
         const webMonitorId = new Date().getTime()
         const param = Object.assign({}, {webMonitorId}, {...data})
         this.props.createNewProjectAction(param, (res) => {
-          const { monitorCode } = res
-          this.props.updateCreateProjectState({monitorCode})
+          if (res !== 1) {
+            const { monitorCode, remotePath } = res
+            this.props.updateCreateProjectState({monitorCode, remotePath})
+          } else {
+            message.error("项目名称重复，请更换项目名称，重新创建", 8)
+          }
         })
       }
     })

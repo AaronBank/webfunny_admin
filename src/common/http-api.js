@@ -51,12 +51,17 @@ const api = {
   "getPageLoadTimeByDate": apiHost + "/server/getPageLoadTimeByDate",
   // 获取静态资源加载失败列表
   "getResourceLoadInfoListByDay": apiHost + "/server/getResourceLoadInfoListByDay",
-  // 获取每天接口请求失败数量列表
+  // 获取每天静态资源加载失败数量列表
   "getResourceErrorCountByDay": apiHost + "/server/getResourceErrorCountByDay",
   // 获取一天内每小时报错数量
   "getResourceErrorCountByHour": apiHost + "/server/getResourceErrorCountByHour",
   // 获取一天内每小时接口请求报错数量
   "getHttpErrorCountByHour": apiHost + "/server/getHttpErrorCountByHour",
+
+  // 获取每天接口请求失败数量列表
+  "getHttpErrorCountByDay": apiHost + "/server/getHttpErrorCountByDay",
+  // 获取每天接口请求失败数量列表
+  "getHttpErrorListByDay": apiHost + "/server/getHttpErrorListByDay",
 
   // 创建新项目
   "createNewProject": apiHost + "/server/createNewProject",

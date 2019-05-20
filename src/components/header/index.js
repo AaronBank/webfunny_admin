@@ -1,6 +1,6 @@
 import "./index.scss"
 import React, { Component } from "react"
-import { Menu, Dropdown, Icon, Tooltip, Switch, AutoComplete, Button } from "antd"
+import { Menu, Dropdown, Icon, Tooltip, AutoComplete, Button } from "antd"
 import HttpUtil from "Common/http-util"
 import HttpApi from "Common/http-api"
 import SvgIcons from "Components/svg_icons"
@@ -47,8 +47,7 @@ export default class Header extends Component {
   }
 
   render() {
-    const { userType, projectList, chooseProject } = this.state
-    const { isCreateProject } = this.props
+    const { projectList, chooseProject } = this.state
     const projectNameList = []
     const chooseProjectName = chooseProject.projectName
     projectList.forEach((item) => {
@@ -66,12 +65,34 @@ export default class Header extends Component {
         icon: <Icon type="file-text" />
       },
       {
-        name: "接口请求错误统计（待发布）",
-        url: "",
+        name: "接口请求错误统计",
+        url: "httpError",
         icon: <Icon type="export" />
       },
     ]
+    const performanceNameList = [
+      {
+        name: "页面加载性能分析（待发布）",
+        // url: "pagePerformance",
+        icon: <Icon type="line-chart" />
+      },
+      {
+        name: "接口请求性能分析（待发布）",
+        // url: "httpPerformance",
+        icon: <Icon type="file-text" />
+      },
+    ]
 
+    const performanceMenu =
+      <Menu>
+        {
+          performanceNameList.map((errorName, index) => {
+            return <Menu.Item key={ index }>
+              <a onClick={this.turnToErrorPage.bind(this, errorName)}>{errorName.icon} {errorName.name}</a>
+            </Menu.Item>
+          })
+        }
+      </Menu>
     const errorMenu =
       <Menu>
         {
@@ -95,7 +116,7 @@ export default class Header extends Component {
                 dataSource={projectNameList}
                 placeholder="试着输入你的项目名称"
                 defaultValue={chooseProjectName}
-                filterOption={(inputValue, option) => option.props.children.indexOf(inputValue) !== -1}
+                filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                 onSelect={(value) => {
                   projectList.forEach((item) => {
                     if (item.projectName === value) {
@@ -106,12 +127,7 @@ export default class Header extends Component {
               /><div className="search-icon"><Icon type="search"/></div>
             </span>
           }
-          { isCreateProject &&
-          <span>
-                <Switch className="user-type-switch" checkedChildren="开" unCheckedChildren="关" defaultChecked={false} onChange={this.changeUserType.bind(this)}/> <label className={userType === 2 ? "user-type-text user-type-active" : "user-type-text"}>一键部署</label>
-            { userType === 2 && isCreateProject && <Button type="primary" icon="plus" onClick={this.turnToCreateNewProject.bind(this)}>新建</Button> }
-              </span>
-          }
+          <Button type="primary" icon="plus" onClick={this.turnToCreateNewProject.bind(this)}>新建项目</Button>
         </div>
         <span className="menu-right" onClick={this.turnTo.bind(this, "home")}>首页</span>
         <span className="menu-right">
@@ -121,8 +137,15 @@ export default class Header extends Component {
             </a>
           </Dropdown>
         </span>
-        <span className="menu-right" onClick={this.turnTo.bind(this, "behaviors")}>行为检索<Icon className="new-flag" component={NewFlag}/></span>
-        <span className="menu-right">性能分析<label className="not">Not</label></span>
+        <span className="menu-right">
+          <Dropdown overlay={performanceMenu} trigger={["click"]}>
+            <a className="ant-dropdown-link" href="#">
+              性能分析 <Icon type="down" />
+            </a>
+          </Dropdown>
+          <label className="not">待发布</label>
+        </span>
+        <span className="menu-right" onClick={this.turnTo.bind(this, "behaviors")}>记录回放<Icon className="new-flag" component={NewFlag}/></span>
         <div className="github-container" onClick={this.turnToBlog.bind(this)}/>
       </section>
       <div className="message-box" onClick={this.turnToZhihu.bind(this)}>

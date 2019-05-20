@@ -1,20 +1,24 @@
 import { handleActions } from "redux-actions"
 
 const initialState = {
-  remotePath: "",
-  monitorCode: ""
+  httpErrorByDayChart: null,
+  resourceLoadErrorList: null,
+  timeType: 0,
+  totalCount: 0,
+  customerCount: 0,
+  dayDetail: {}
 }
 
 export default handleActions({
 
-  updateCreateProjectState: (state = initialState, { payload }) => {
+  updateHttpErrorState: (state = initialState, { payload }) => {
     return {
       ...state,
       ...payload
     }
   },
 
-  clearCreateProjectState: () => {
+  clearHttpErrorState: () => {
     return {
       ...initialState
     }

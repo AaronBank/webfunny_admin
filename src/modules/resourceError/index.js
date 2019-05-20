@@ -23,7 +23,6 @@ class ResourceError extends Component {
 
   render() {
     const { resourceErrorByDayChart, resourceLoadErrorList, totalCount, customerCount } = this.props
-    console.log(totalCount, customerCount)
     return <div className="resourceError-container">
       <Header
         chooseProject={this.choseProject.bind(this)}
@@ -64,7 +63,7 @@ class ResourceError extends Component {
                 </div>
                 <div className="info-box">
                   <span><Icon component={SvgIcons.Customers} /><label>影响用户数</label></span>
-                  <span>{customerCount}次</span>
+                  <span>{customerCount}位</span>
                 </div>
               </TabPane>
             </Tabs>
@@ -80,7 +79,7 @@ class ResourceError extends Component {
                 resourceLoadErrorList.map((resource, index) => {
                   if (!resource.sourceUrl.length) return null
                   return <p key={index}>
-                    <span>{ Utils.b64DecodeUnicode(resource.sourceUrl) } 【总共:<b>{ resource.count }</b>次 | 发生页面:<b>{resource.pageCount}</b>个 | 影响用户:<b>{resource.customerCount}</b>次】</span>
+                    <span>{ Utils.b64DecodeUnicode(resource.sourceUrl) } 【总共:<b>{ resource.count }</b>次 | 发生页面:<b>{resource.pageCount}</b>个 | 影响用户:<b>{resource.customerCount}</b>位】</span>
                     <span style={{color: "#666"}}>{new Date(resource.createdAt).Format("yyyy-MM-dd hh:mm:ss")}</span>
                   </p>
                 })

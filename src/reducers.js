@@ -2,6 +2,7 @@ import behaviorsReducer from "Modules/behaviors/reducer"
 import createProjectReducer from "Modules/createProject/reducer"
 import customerPvAnalysisReducer from "Modules/customerPvAnalysis/reducer"
 import homeReducer from "Modules/home/reducer"
+import httpErrorReducer from "Modules/httpError/reducer"
 import javascriptErrorReducer from "Modules/javascriptError/reducer"
 import javascriptErrorDetailReducer from "Modules/javascriptErrorDetail/reducer"
 import loginReducer from "Modules/login/reducer"
@@ -15,6 +16,7 @@ export default {
   createProject: {reducer: createProjectReducer, isCached: false},
   customerPvAnalysis: {reducer: customerPvAnalysisReducer, isCached: false},
   home: {reducer: homeReducer, isCached: false},
+  httpError: {reducer: httpErrorReducer, isCached: false},
   javascriptError: {reducer: javascriptErrorReducer, isCached: false},
   javascriptErrorDetail: {reducer: javascriptErrorDetailReducer, isCached: false},
   login: {reducer: loginReducer, isCached: false},

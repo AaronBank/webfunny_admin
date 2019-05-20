@@ -14,5 +14,6 @@ export default [
   { path: prePath + "/showScreenShot", component: containers.ShowScreenShot },
   { path: prePath + "/customerPvAnalysis", component: containers.CustomerPvAnalysis },
   { path: prePath + "/resourceError", component: containers.ResourceError },
+  { path: prePath + "/httpError", component: containers.HttpError },
   { path: prePath + "/createProject", component: containers.CreateProject },
 ]

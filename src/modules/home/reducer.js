@@ -8,7 +8,8 @@ const initialState = {
   resourceErrorByDayChart: null,
   resourceErrorTotalCount: 0,
   httpErrorByHourChart: null,
-  httpErrorTotalCount: 0
+  httpErrorTotalCount: 0,
+  activePanelIndex: 1
 }
 
 export default handleActions({

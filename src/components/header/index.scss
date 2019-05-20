@@ -119,7 +119,7 @@
       margin-left: -2px;
     }
     .github-container {
-      width: 50px;
+      width: 60px;
       height: 32px;
       background: url("~Images/common/github5.png");
       background-size: 100% 100%;
@@ -200,7 +200,7 @@
       z-index: 1;
     }
     .menu-right {
-      width: 150px;
+      width: 200px;
       text-align: center;
       cursor: pointer;
       .ant-dropdown-link {
@@ -264,4 +264,7 @@
 }
 .ui-progress-bar {
   display: none!important;
+}
+.ant-message {
+  z-index: 1012;
 }

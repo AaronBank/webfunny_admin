@@ -32,7 +32,7 @@ class Behaviors extends Component {
   }
 
   render() {
-    const { behaviorList, searchFlag, userInfo, loadPageTimeList, timeScope, showMore } = this.props
+    const { behaviorList, searchFlag, userInfo, loadPageTimeList, timeScope, showMore, behaviorStartTime, behaviorEndTime } = this.props
     const bLen = behaviorList.length
     // let happenTimeTemp = ""
     const selectTimeScope =
@@ -181,8 +181,8 @@ class Behaviors extends Component {
                 <p>网络地址：{userInfo.monitorIp}</p>
                 <p>所在地区：{userInfo.province + "  " + userInfo.city}</p>
                 <p>
-                  <span style={{display: "block"}}>开始时间：{new Date(parseInt(userInfo.startTime, 10)).Format("yyyy-MM-dd hh:mm:ss")}</span>
-                  <span>结束时间：{new Date(parseInt(userInfo.endTime, 10)).Format("yyyy-MM-dd hh:mm:ss")}</span>
+                  <span style={{display: "block"}}>开始时间：{new Date(parseInt(behaviorStartTime, 10)).Format("yyyy-MM-dd hh:mm:ss")}</span>
+                  <span>结束时间：{new Date(parseInt(behaviorEndTime, 10)).Format("yyyy-MM-dd hh:mm:ss")}</span>
                 </p>
                 <p>行为记录：{behaviorList.length} 条</p>
               </Card>
@@ -225,9 +225,9 @@ class Behaviors extends Component {
       }
 
       const userInfo = result.cusDetail || {}
-      userInfo.startTime = res[0].happenTime
-      userInfo.endTime = res[len - 1].happenTime
-      this.props.updateBehaviorsState({behaviorList: res, searchFlag: true, userInfo})
+      const behaviorStartTime = res[0].happenTime
+      const behaviorEndTime = res[len - 1].happenTime
+      this.props.updateBehaviorsState({behaviorList: res, searchFlag: true, userInfo, behaviorStartTime, behaviorEndTime})
       setTimeout(() => {
         this.createLoadPageTimeChart(result.loadPageTimeList)
       }, 1000)
@@ -249,6 +249,7 @@ class Behaviors extends Component {
     this.setState({loading: true})
     this.props.searchUserBehaviorsAction({searchValue, webMonitorId, timeScope }, (result) => {
       const res = result.behaviorList
+      const len = res.length
       for (let i = 0; i < res.length - 1; i++) {
         for (let j = 0; j < res.length - 1 - i; j++) {
           if (res[j].happenTime > res[j + 1].happenTime) {
@@ -258,7 +259,10 @@ class Behaviors extends Component {
           }
         }
       }
-      this.props.updateBehaviorsState({behaviorList: res, searchFlag: true})
+      const behaviorStartTime = res[0].happenTime
+      const behaviorEndTime = res[len - 1].happenTime
+      this.props.updateBehaviorsState({behaviorList: res, searchFlag: true, behaviorStartTime, behaviorEndTime})
+
       this.setState({loading: false})
     }, () => {
       this.setState({loading: false})
