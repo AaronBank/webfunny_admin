@@ -51,9 +51,10 @@ module.exports = env => {
       }),
       new webpack.optimize.CommonsChunkPlugin({
         name: 'common',
-        minChunks: function (module) {
-          return module.context && module.context.indexOf('node_modules') !== -1;   // this assumes your vendor imports exist in the node_modules directory
-        }
+        // minChunks: function (module) {
+        //   return module.context && module.context.indexOf('node_modules') !== -1;   // this assumes your vendor imports exist in the node_modules directory
+        // }
+        minChunks: 2
       }),
       new HtmlWebpackPlugin({
         template: './src/index.html',

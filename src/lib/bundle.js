@@ -8,6 +8,7 @@ class Bundle extends Component {
   }
   componentWillMount() {
     this.load(this.props)
+    document.getElementById("progress_bar").style.display = "block"
   }
   componentDidMount() {
     // 提前加载一页需要加载的组件

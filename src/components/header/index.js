@@ -44,8 +44,8 @@ export default class Header extends Component {
         $(".header-container").fadeIn()
       }
     })
+    document.getElementById("progress_bar").style.display = "none"
   }
-
   render() {
     const { projectList, chooseProject } = this.state
     const projectNameList = []
