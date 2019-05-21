@@ -127,7 +127,7 @@ class Behaviors extends Component {
                       color = "red"
                       behaviorName = <span style={{display: "block"}}>{behavior.statusResult} <i style={{fontSize: 12, color}}>{"    状态：" + status + "  "} <b>||</b> {"  " + "耗时：" + loadTime + "秒  " }</i></span>
                     }
-                    behaviorContent = <span style={{display: "block"}}><i style={{fontSize: 12}}>请求地址：{Utils.b64DecodeUnicode(behavior.httpUrl)}</i></span>
+                    behaviorContent = <span style={{display: "block"}}><i style={{fontSize: 12}}>请求地址：{decodeURIComponent(behavior.httpUrl)}</i></span>
                   } else if (behavior.uploadType === "APP_BEHAVIOR") {
                     color = "#b7b752"
                     behaviorName = <span style={{display: "block"}}>{behavior.behaviorType} <i style={{fontSize: 12, color}}>{"    状态：" + behavior.behaviorResult + "  "}</i></span>

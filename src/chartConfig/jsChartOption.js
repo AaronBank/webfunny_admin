@@ -147,6 +147,15 @@ export const jsErrorOptionByHour = (result2, result1) => {
         name: "一周前",
         type: "line",
         smooth: true,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: '#AEC5EB'
+          }, {
+            offset: 1,
+            color: 'rgb(255,255,255)'
+          }])
+        },
         data: result1[1],
       },
       {
