@@ -16,4 +16,5 @@ export default [
   { path: prePath + "/resourceError", component: containers.ResourceError },
   { path: prePath + "/httpError", component: containers.HttpError },
   { path: prePath + "/createProject", component: containers.CreateProject },
+  { path: prePath + "/animateList", component: containers.AnimateList },
 ]

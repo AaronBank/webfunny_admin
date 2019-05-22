@@ -93,8 +93,8 @@ class JavascriptError extends Component {
                   const timeStatus = nowTime - latestTime > 24 * 60 * 60 * 1000
                   return <p key={index} onClick={this.turnToDetail.bind(this, error)} title="点击查看详情" >
                       <span className={ignoreStatus && " status-icon status-icon-ignore " ||  resolveStatus && " status-icon status-icon-resolve " || "status-icon"}/>
-                      <span>{ ((msgArr[0] || msgArr[1] || msgArr[2]) || "").substring(0, 30)}</span>
-                      <span>{(msgArr[len - 1]) || "..."}</span>
+                      <span>{ (msgArr[0] || msgArr[1] || msgArr[2] || "").substring(0, 30)}</span>
+                      <span>{msgArr[len - 1] || "..."}</span>
                       { error.osInfo &&
                       error.osInfo.map((obj) => {
                         let osType = ""
@@ -138,8 +138,8 @@ class JavascriptError extends Component {
                   const timeStatus = nowTime - latestTime > 24 * 60 * 60 * 1000
                   return <p key={index} onClick={this.turnToDetail.bind(this, error)} title="点击查看详情" >
                     <span className={ignoreStatus && " status-icon status-icon-ignore " ||  resolveStatus && " status-icon status-icon-resolve " || "status-icon"}/>
-                    <span>{ ((msgArr[0] || msgArr[1] || msgArr[2]) || "").substring(0, 30)}</span>
-                    <span>{(msgArr[len - 1]) || "..."}</span>
+                    <span>{ (msgArr[0] || msgArr[1] || msgArr[2] || "").substring(0, 30)}</span>
+                    <span>{msgArr[len - 1] || "..."}</span>
                     { error.osInfo &&
                     error.osInfo.map((obj) => {
                       let osType = ""

@@ -150,10 +150,10 @@ export const jsErrorOptionByHour = (result2, result1) => {
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
-            color: '#AEC5EB'
+            color: "#AEC5EB"
           }, {
             offset: 1,
-            color: 'rgb(255,255,255)'
+            color: "rgb(255,255,255)"
           }])
         },
         data: result1[1],
@@ -165,10 +165,10 @@ export const jsErrorOptionByHour = (result2, result1) => {
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
-            color: '#E37B66'
+            color: "#E37B66"
           }, {
             offset: 1,
-            color: 'rgb(255,255,255)'
+            color: "rgb(255,255,255)"
           }])
         },
         data: result2[1],

@@ -62,3 +62,8 @@ export const CreateProject = props => <Bundle loadContainer={CreateProjectContai
 export const HttpError = props => <Bundle loadContainer={HttpErrorContainer} title="接口请求报错分析" >
   {Container => <Container {...props} />}
 </Bundle>
+
+import AnimateListContainer from "Containers/animateList"
+export const AnimateList = props => <Bundle loadContainer={AnimateListContainer} title="动画集合页" >
+  {Container => <Container {...props} />}
+</Bundle>

@@ -1,3 +1,4 @@
+import animateListReducer from "Modules/animateList/reducer"
 import behaviorsReducer from "Modules/behaviors/reducer"
 import createProjectReducer from "Modules/createProject/reducer"
 import customerPvAnalysisReducer from "Modules/customerPvAnalysis/reducer"
@@ -12,6 +13,7 @@ import resourceErrorReducer from "Modules/resourceError/reducer"
 import showScreenShotReducer from "Modules/showScreenShot/reducer"
 
 export default {
+  animateList: {reducer: animateListReducer, isCached: false},
   behaviors: {reducer: behaviorsReducer, isCached: false},
   createProject: {reducer: createProjectReducer, isCached: false},
   customerPvAnalysis: {reducer: customerPvAnalysisReducer, isCached: false},
