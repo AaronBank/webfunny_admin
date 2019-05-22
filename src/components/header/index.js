@@ -137,6 +137,7 @@ export default class Header extends Component {
             </a>
           </Dropdown>
         </span>
+        <span className="menu-right" onClick={this.turnTo.bind(this, "behaviors")}>记录回放<Icon className="new-flag" component={NewFlag}/></span>
         <span className="menu-right">
           <Dropdown overlay={performanceMenu} trigger={["click"]}>
             <a className="ant-dropdown-link" href="#">
@@ -145,7 +146,7 @@ export default class Header extends Component {
           </Dropdown>
           <label className="not">待发布</label>
         </span>
-        <span className="menu-right" onClick={this.turnTo.bind(this, "behaviors")}>记录回放</span>
+
         <div className="github-container" onClick={this.turnToBlog.bind(this)}/>
       </section>
       <div className="message-box" onClick={this.turnToZhihu.bind(this)}>
@@ -162,7 +163,7 @@ export default class Header extends Component {
     this.props.parentProps.history.push(url)
   }
   turnToBlog() {
-    window.open("https://zhuanlan.zhihu.com/p/66680065")
+    window.open("https://www.cnblogs.com/warm-stranger/p/10209990.html")
   }
   turnToHome() {
     const {parentProps} = this.props

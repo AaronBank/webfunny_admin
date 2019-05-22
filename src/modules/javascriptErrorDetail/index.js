@@ -67,9 +67,9 @@ class JavascriptErrorDetail extends Component {
     let osIcon = null
     let deviceIcon = <Icon type="mobile" />
     if (errorDetail.os === "android") {
-      osIcon = <Icon type="android" />
+      osIcon = <Icon type="android" theme="filled"/>
     } else if (errorDetail.os === "ios" || errorDetail.os === "Mac") {
-      osIcon = <Icon type="apple" />
+      osIcon = <Icon type="apple" theme="filled" />
     } else if (errorDetail.os === "Windows") {
       osIcon = <img className="browser-icon" src={require("Images/javascriptErrorDetail/windows.png")}/>
     }

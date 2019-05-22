@@ -189,6 +189,9 @@ export default class Home extends Component {
     setTimeout(() => {
       this.initData()
     }, 2000)
+    setInterval(() => {
+      this.initData()
+    }, 5 * 60 * 1000)
   }
   turnToJsError() {
     this.props.history.push("javascriptError")
