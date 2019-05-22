@@ -16,13 +16,14 @@ export default class Utils {
         return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
       }).join(""))
     } catch (e) {
-      return str
+      return Utils.b64DecodeUnicodeWithSpace(str)
     }
   }
   static b64DecodeUnicodeWithSpace(tempStr) {
     if (!tempStr) return ""
-    const str = tempStr.replace(/ /g, "+")
+    let str = ""
     try {
+      str = tempStr.replace(/ /g, "+")
       return decodeURIComponent(atob(str).split("").map(function(c) {
         return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
       }).join(""))
@@ -38,7 +39,7 @@ export default class Utils {
         return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
       }).join(""))
     } catch (e) {
-      return str
+      return tempStr
     }
   }
   static qs(object, cache) {

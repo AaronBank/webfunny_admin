@@ -14,7 +14,7 @@ class JavascriptErrorDetail extends Component {
   async componentDidMount() {
     const { errorMsg } = Utils.parseQs()
     let errorDetail = []
-    await this.props.getJavascriptErrorListByMsgAction({errorMsg: encodeURIComponent(errorMsg)}, (data) => {
+    await this.props.getJavascriptErrorListByMsgAction({errorMsg: errorMsg}, (data) => {
       const { errorIndex } = this.props
       const errorList = data
       errorDetail = this.analysisError(errorList[errorIndex])
@@ -91,8 +91,8 @@ class JavascriptErrorDetail extends Component {
       <Header parentProps={this.props}/>
       <Row className="detail-container">
         <Col span={16}>
-          <span className="error-type">{Utils.b64DecodeUnicode(errorDetail.errorType)}</span><span className="error-url">{Utils.b64DecodeUnicode(errorDetail.titleDetail) || "..."}</span>
-          <span className="error-msg"><label /><label>{Utils.b64DecodeUnicode(errorDetail.errorMessage) || "..."}</label> <label>{errorDetail.happenTime}</label></span>
+          <span className="error-type">{decodeURIComponent(Utils.b64DecodeUnicodeWithSpace(errorDetail.errorType))}</span><span className="error-url">{Utils.b64DecodeUnicode(errorDetail.titleDetail) || "..."}</span>
+          <span className="error-msg"><label /><label>{Utils.b64DecodeUnicodeWithSpace(errorDetail.errorMessage) || "..."}</label> <label>{errorDetail.happenTime}</label></span>
           <span className="error-page-link"><Icon type="link" /><a target="_blank" href={Utils.b64DecodeUnicode(errorDetail.simpleUrl)}>{Utils.b64DecodeUnicode(errorDetail.simpleUrl) || "..."}</a></span>
         </Col>
         <Col span={8}>
@@ -163,12 +163,12 @@ class JavascriptErrorDetail extends Component {
       }
       <Row className="stack-container">
         <h4>Js错误堆栈</h4>
-        <span className="error-msg">{ Utils.b64DecodeUnicode(errorDetail.errorMessage) }</span>
+        <span className="error-msg">{ Utils.b64DecodeUnicodeWithSpace(errorDetail.errorMessage) }</span>
         <Collapse defaultActiveKey={["1"]} onChange={this.callback}>
           {
             errorStackList.map((stack, index) => {
               return <Panel header={stack.jsPathStr} key={index + 1}>
-                <p>{Utils.b64DecodeUnicode(decodeURIComponent(stack.code))}</p>
+                <p>{decodeURIComponent(stack.code)}</p>
               </Panel>
             })
           }
@@ -257,7 +257,7 @@ class JavascriptErrorDetail extends Component {
     let os = error.os.split(" ")[0]
     let osVersion = error.os.split(" ")[1]
     const deviceName = error.deviceName
-    const jsPathArray = Utils.b64DecodeUnicode(error.errorStack).match(/\([(http)?:]?[\S]*\d+\)/g)
+    const jsPathArray = Utils.b64DecodeUnicode(error.errorStack).match(/(http){1}s?:\/\/\S*.js:\d+:\d+/g)
     const tempArr = jsPathArray ? jsPathArray[0].split("/") : []
     const titleDetail = tempArr.length ? tempArr[tempArr.length - 1] : ""
     const customerKey = error.customerKey
@@ -332,6 +332,8 @@ class JavascriptErrorDetail extends Component {
     if (!jsPathArray || !jsPathArray.length) {
       jsPathArray = []
     }
+    // (http){1}s?:\/\/\S*.js:\d+:\d+
+    console.log(jsPathArray)
     const stackList = []
     for (let i = 0; i < jsPathArray.length; i ++) {
       const jsPathStr = jsPathArray[i].replace(/[()]/g, "")
