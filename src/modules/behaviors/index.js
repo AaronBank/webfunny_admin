@@ -29,6 +29,7 @@ class Behaviors extends Component {
         this.search()
       }
     })
+    console.log(localStorage)
   }
 
   render() {

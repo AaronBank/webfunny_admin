@@ -133,7 +133,7 @@ export default class Header extends Component {
         <span className="menu-right">
           <Dropdown overlay={errorMenu} trigger={["click"]}>
             <a className="ant-dropdown-link" href="#">
-              错误统计 <Icon type="down" />
+              错误统计 <Icon type="down" /><Icon className="new-flag" component={NewFlag}/>
             </a>
           </Dropdown>
         </span>
@@ -145,7 +145,7 @@ export default class Header extends Component {
           </Dropdown>
           <label className="not">待发布</label>
         </span>
-        <span className="menu-right" onClick={this.turnTo.bind(this, "behaviors")}>记录回放<Icon className="new-flag" component={NewFlag}/></span>
+        <span className="menu-right" onClick={this.turnTo.bind(this, "behaviors")}>记录回放</span>
         <div className="github-container" onClick={this.turnToBlog.bind(this)}/>
       </section>
       <div className="message-box" onClick={this.turnToZhihu.bind(this)}>

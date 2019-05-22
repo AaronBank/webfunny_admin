@@ -67,7 +67,7 @@ class HttpError extends Component {
         </Row>
         <Row>
           <Tabs defaultActiveKey="1" >
-            <TabPane tab={<span><Icon type="tags-o" />接口请求失败列表(<b>TOP15</b>)</span>} key="1">
+            <TabPane tab={<span><Icon type="tags-o" />接口请求失败列表(<b>TOP20</b>)</span>} key="1">
               <Card className="error-list-container">
                 { httpErrorList &&
                 httpErrorList.map((httpError, index) => {

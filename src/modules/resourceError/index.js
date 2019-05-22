@@ -79,7 +79,7 @@ class ResourceError extends Component {
                 resourceLoadErrorList.map((resource, index) => {
                   if (!resource.sourceUrl.length) return null
                   return <p key={index}>
-                    <span>{ Utils.b64DecodeUnicode(resource.sourceUrl) } 【总共:<b>{ resource.count }</b>次 | 发生页面:<b>{resource.pageCount}</b>个 | 影响用户:<b>{resource.customerCount}</b>位】</span>
+                    <span>{ decodeURIComponent(Utils.b64DecodeUnicode(resource.sourceUrl)) } 【总共:<b>{ resource.count }</b>次 | 发生页面:<b>{resource.pageCount}</b>个 | 影响用户:<b>{resource.customerCount}</b>位】</span>
                     <span style={{color: "#666"}}>{new Date(resource.createdAt).Format("yyyy-MM-dd hh:mm:ss")}</span>
                   </p>
                 })
