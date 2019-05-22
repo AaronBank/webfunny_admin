@@ -162,7 +162,7 @@ export default class Header extends Component {
     this.props.parentProps.history.push(url)
   }
   turnToBlog() {
-    window.open("https://www.cnblogs.com/warm-stranger/p/10209990.html")
+    window.open("https://zhuanlan.zhihu.com/p/66680065")
   }
   turnToHome() {
     const {parentProps} = this.props
