@@ -42,8 +42,9 @@ class AnimateList extends Component {
 
   render() {
     return <div className="animateList-container">
-      <Header/>
-      <Card title="3D旋转动画效果或者卫星围绕旋转效果" bordered={false} style={{ width: "80%", marginTop: 90, marginLeft: "10%", height: 500 }}>
+      <Header parentProps={this.props}/>
+      <a id="a1" href="#a1"/>
+      <Card title="3D旋转动画效果或者卫星围绕旋转效果（终）" bordered={false} style={{ width: "80%", marginTop: 90, marginLeft: "10%", height: 500 }}>
         <div className="star-animate">
           <div className="out_circle">
             <div className="nav_circle r1">
@@ -61,6 +62,25 @@ class AnimateList extends Component {
           </div>
         </div>
       </Card>
+      <a id="a2" href="#a2"/>
+      <Card title="3D旋转动画效果或者卫星围绕旋转效果（一）" bordered={false} style={{ width: "80%", marginTop: 90, marginLeft: "10%", height: 600 }}>
+        <div className="star-animate1">
+          <div className="out_circle">
+            <div className="nav_circle r1">
+              <div className="img_top img">
+                <img src={require("Images/animateList/1/star1.png")}/>
+              </div>
+              <div className="img_bottom img">
+                <img src={require("Images/animateList/1/star2.png")}/>
+              </div>
+              <div className="img_bottom2 img">
+                <img src={require("Images/animateList/1/star3.png")}/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Card>
+
     </div>
   }
 }

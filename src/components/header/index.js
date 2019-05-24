@@ -129,7 +129,7 @@ export default class Header extends Component {
           }
           <Button type="primary" icon="plus" onClick={this.turnToCreateNewProject.bind(this)}>新建项目</Button>
         </div>
-        <span className="menu-right" onClick={this.turnTo.bind(this, "home")}>监控首页</span>
+        <span className="menu-right" onClick={this.turnTo.bind(this, "home")}>实时监控</span>
         <span className="menu-right">
           <Dropdown overlay={errorMenu} trigger={["click"]}>
             <a className="ant-dropdown-link" href="#">

@@ -10,7 +10,7 @@ import JavascriptErrorDetailContainer from "Containers/javascriptErrorDetail"
 import CustomerPvAnalysisContainer from "Containers/customerPvAnalysis"
 import ResourceErrorContainer from "Containers/resourceError"
 import HttpErrorContainer from "Containers/httpError"
-export const Home = props => <Bundle loadContainer={HomeContainer} title="前端监控系统" >
+export const Home = props => <Bundle loadContainer={HomeContainer} title="前端监控系统，实时监控及报警" >
   {Container => <Container {...props} />}
 </Bundle>
 
@@ -29,7 +29,7 @@ export const Login = props => <Bundle loadContainer={LoginContainer} title="logi
   {Container => <Container {...props} />}
 </Bundle>
 
-export const JavascriptError = props => <Bundle loadContainer={JavascriptErrorContainer} title="JS错误列表" >
+export const JavascriptError = props => <Bundle loadContainer={JavascriptErrorContainer} title="JS错误列表，利用window.onerror及console.error监控前端页面报错情况" >
   {Container => <Container {...props} />}
 </Bundle>
 
@@ -38,11 +38,11 @@ export const JavascriptErrorDetail = props => <Bundle loadContainer={JavascriptE
 </Bundle>
 
 import ShowScreenShotContainer from "Containers/showScreenShot"
-export const ShowScreenShot = props => <Bundle loadContainer={ShowScreenShotContainer} title="线上截图分析" >
+export const ShowScreenShot = props => <Bundle loadContainer={ShowScreenShotContainer} title="线上截图分析，利用html2Canvas等工具，用javascript代码对页面进行截图" >
   {Container => <Container {...props} />}
 </Bundle>
 
-export const Behaviors = props => <Bundle loadContainer={BehaviorsContainer} title="用户行为分析" >
+export const Behaviors = props => <Bundle loadContainer={BehaviorsContainer} title="用户行为分析，通过监听并记录页面上用户的访问，请求，点击，报错等行为，来辅助前端开发定位线上问题" >
   {Container => <Container {...props} />}
 </Bundle>
 
@@ -50,7 +50,7 @@ export const CustomerPvAnalysis = props => <Bundle loadContainer={CustomerPvAnal
   {Container => <Container {...props} />}
 </Bundle>
 
-export const ResourceError = props => <Bundle loadContainer={ResourceErrorContainer} title="静态资源加载报错分析" >
+export const ResourceError = props => <Bundle loadContainer={ResourceErrorContainer} title="静态资源加载报错分析，通过监听页面静态资源加载事件分析出html页面上静态资源加载的情况" >
   {Container => <Container {...props} />}
 </Bundle>
 
@@ -64,6 +64,6 @@ export const HttpError = props => <Bundle loadContainer={HttpErrorContainer} tit
 </Bundle>
 
 import AnimateListContainer from "Containers/animateList"
-export const AnimateList = props => <Bundle loadContainer={AnimateListContainer} title="动画集合页" >
+export const AnimateList = props => <Bundle loadContainer={AnimateListContainer} title="Css3 如何画3D旋转效果或者卫星围绕旋转效果" >
   {Container => <Container {...props} />}
 </Bundle>
