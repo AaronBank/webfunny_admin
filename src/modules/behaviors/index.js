@@ -212,7 +212,7 @@ class Behaviors extends Component {
     const { exampleSearchValue } = this.props
     this.setState({loading: true, searchExampleAble: true})
     const searchValue = Utils.b64EncodeUnicode(exampleSearchValue)
-    this.props.searchUserBehaviorsAction({searchValue, webMonitorId: "LTV_webmonitor", timeScope: 3 }, (result) => {
+    this.props.searchUserBehaviorsAction({searchValue, webMonitorId: "LTV_webmonitor", timeScope: 1 }, (result) => {
       const res = result.behaviorList
       const len = res.length
       for (let i = 0; i < res.length - 1; i++) {
