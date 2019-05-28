@@ -119,16 +119,23 @@
       margin-left: -2px;
     }
     .github-container {
-      width: 60px;
+      width: 180px;
       height: 32px;
-      background: url("~Images/common/github5.png");
-      background-size: 100% 100%;
-      background-position: center;
+      font-weight: bold;
+      text-align: right;
+      margin-left: 10px;
+      color: #000;
+      //background: url("~Images/common/github5.png");
+      //background-size: 100% 100%;
+      //background-position: center;
       cursor: pointer;
-      animation: github_container_animate 10s linear infinite;
-      -webkit-animation: github_container_animate 10s linear infinite;
-      -moz-animation: github_container_animate 10s linear infinite;
-      -o-animation: github_container_animate 10s linear infinite;
+      //animation: github_container_animate 10s linear infinite;
+      //-webkit-animation: github_container_animate 10s linear infinite;
+      //-moz-animation: github_container_animate 10s linear infinite;
+      //-o-animation: github_container_animate 10s linear infinite;
+      .ant-radio-button-wrapper {
+        padding: 0 7px;
+      }
     }
     @keyframes github_container_animate{
       0%{

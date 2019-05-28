@@ -1,6 +1,6 @@
 import "./index.scss"
 import React, { Component } from "react"
-import { Menu, Dropdown, Icon, Tooltip, AutoComplete, Button } from "antd"
+import { Menu, Dropdown, Icon, Tooltip, AutoComplete, Button, Radio } from "antd"
 import HttpUtil from "Common/http-util"
 import HttpApi from "Common/http-api"
 import SvgIcons from "Components/svg_icons"
@@ -14,7 +14,8 @@ export default class Header extends Component {
       chooseProject: {
         webMonitorId: "",
         projectName: ""
-      }
+      },
+      starCount: 0
     }
     this.choseProject = this.choseProject.bind(this)
   }
@@ -45,9 +46,14 @@ export default class Header extends Component {
       }
     })
     document.getElementById("progress_bar").style.display = "none"
+
+    // 获取git数据
+    HttpUtil.get("//api.github.com/repos/a597873885/webfunny_monitor/stargazers", {per_page: 300}).then( (res) => {
+      this.setState({starCount: res.length})
+    })
   }
   render() {
-    const { projectList, chooseProject } = this.state
+    const { projectList, chooseProject, starCount } = this.state
     const projectNameList = []
     const chooseProjectName = chooseProject.projectName
     projectList.forEach((item) => {
@@ -146,8 +152,10 @@ export default class Header extends Component {
           </Dropdown>
           <label className="not">待发布</label>
         </span>
-
-        <div className="github-container" onClick={this.turnToBlog.bind(this)}/>
+        <Radio.Group className="github-container" value="small" onClick={this.turnToBlog.bind(this)}>
+          <Radio.Button style={{background: "#f8fafb"}} ><Icon type="star" theme="filled" />Star</Radio.Button>
+          <Radio.Button >{starCount}</Radio.Button>
+        </Radio.Group>
       </section>
       <div className="message-box" onClick={this.turnToZhihu.bind(this)}>
         <Tooltip placement="topRight" title="有问题，欢迎给我留言">
@@ -163,7 +171,7 @@ export default class Header extends Component {
     this.props.parentProps.history.push(url)
   }
   turnToBlog() {
-    window.open("https://www.cnblogs.com/warm-stranger/p/10209990.html")
+    window.open("https://github.com/a597873885/webfunny_monitor")
   }
   turnToHome() {
     const {parentProps} = this.props
