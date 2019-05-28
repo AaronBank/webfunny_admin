@@ -152,9 +152,9 @@ export default class Header extends Component {
           </Dropdown>
           <label className="not">待发布</label>
         </span>
-        <Radio.Group className="github-container" value="small" onClick={this.turnToBlog.bind(this)}>
-          <Radio.Button style={{background: "#f8fafb"}} ><Icon type="star" theme="filled" />Star</Radio.Button>
-          <Radio.Button >{starCount}</Radio.Button>
+        <Radio.Group className="github-container" value="small">
+          <Radio.Button onClick={this.turnToBlog.bind(this)} style={{background: "#f8fafb"}} ><Icon type="star" theme="filled" />Star</Radio.Button>
+          <Radio.Button onClick={this.turnToBlog.bind(this)}>{starCount}</Radio.Button>
         </Radio.Group>
       </section>
       <div className="message-box" onClick={this.turnToZhihu.bind(this)}>
